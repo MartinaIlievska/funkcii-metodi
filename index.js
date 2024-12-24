@@ -10,6 +10,9 @@ const studenti = [
   { ime: "Jasmina", prosek: 9.3, grad: "Gostivar" },
   { ime: "Vele", prosek: 6.4, grad: "Struga" },
   { ime: "Magda", prosek: 7.8, grad: "Berovo" },
+  { ime: "Sevda", prosek: 7.8, grad: "Skopje" },
+  { ime: "Sashe", prosek: 10, grad: "Skopje" },
+  { ime: "Nade", prosek: 7, grad: "Kumanovo" },
 ];
 
 var vkupno = 0;
@@ -86,3 +89,45 @@ console.log(plostinaNaPravoagolnik(5, 3));
 const perimetarNaPravoagolnik = praviagolnik('perimetar');
 console.log(perimetarNaPravoagolnik(5, 3));
 
+// Domasna 2
+//1. Сите студенти од Скопје чие име завршува на а и имаат просек над 7, подредени по име ?(растечки)
+var studentOdSkopje = studenti.filter((student) => {
+  return student.grad.includes("Skopje") && student.ime.endsWith('a') && student.prosek > 7
+});
+console.log(studentOdSkopje);
+
+// 2. Сите студенти кои имаат просек над 9 и не се од Скопје, подредени по просек опаѓачки.
+var visokProsek = studenti.filter((student) => 
+  !student.grad.includes('Skopje') && student.prosek >= 9).sort((a, b) => b.prosek - a.prosek);
+console.log(visokProsek);
+
+//? 3. Првите 3 студенти кои имаат имиња од 5 карактери, подредени по просек.
+var triStudenti = studenti.filter((student) => 
+student.ime.length ==5).slice(0,3).sort((a,b) => a.prosek - b.prosek);
+console.log(triStudenti);
+
+//? 4. Вкупен просек на студенти кои се од Куманово
+var prosekKumanovo = studenti.filter((student) => student.grad.includes("Kumanovo")).reduce((sum, student) => sum + student.prosek, 0);
+console.log('Вкупен просек на студенти кои се од Куманово',prosekKumanovo);
+
+//? 5. Просек на просеците од градовите Скопје и Охрид
+var studentiNov = studenti.filter((student) => student.grad.includes("Skopje") || student.grad.includes("Ohrid"));
+// console.log(studentiNov);
+
+var prosekOhridISkopje = studentiNov.reduce((sum, studentNov) => sum + studentNov.prosek, 0)/studentiNov.length;
+console.log('Просек на просеците од градовите Скопје и Охрид',prosekOhridISkopje);
+
+//? 6. Да се додаде уште еден студент со име Горан, просек 7.3 и град Делчево
+studenti.push({ime: 'Goran', prosek: 7.3, grad: 'Delcevo'});
+console.log(studenti);
+
+//? 7. Да се избрише првиот студент во студенти
+studenti.shift();
+console.log(studenti);
+
+//? 8. Да се креира нов array каде што студентите од Охрид и Куманово каде што оценките со просек се за 1 поголем(Динамички)
+var studentiArray = studenti.filter((student) => student.grad.includes("Kumanovo") || student.grad.includes("Ohrid"));
+console.log(studentiArray);
+
+studentiArray.forEach((studentArray) => studentArray.prosek +=1);
+console.log(studentiArray);
